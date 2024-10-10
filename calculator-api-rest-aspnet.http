@@ -1,6 +1,0 @@
-@calculator_api_rest_aspnet_HostAddress = http://localhost:5109
-
-GET {{calculator_api_rest_aspnet_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
