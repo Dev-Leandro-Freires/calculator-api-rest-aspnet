@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace CalculatorApi.Controllers
 {
-    [Route("[controller]")]
-    public class CalculatorController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CalculatorController : ControllerBase
     {
         private readonly ILogger<CalculatorController> _logger;
 
@@ -18,15 +14,64 @@ namespace CalculatorApi.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet("sum/{firstValue}/{secondValue}")]
+        public IActionResult Sum(string firstValue, string secondValue)
         {
-            return View();
+            if (IsNumber(firstValue) && IsNumber(secondValue))
+            {
+                double result = ConvertToNumber(firstValue) + ConvertToNumber(secondValue);
+                return Ok(result.ToString());
+            }
+            return BadRequest("Request with invalid input");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet("subtraction/{firstValue}/{secondValue}")]
+        public IActionResult Subtraction(string firstValue, string secondValue)
         {
-            return View("Error!");
+            if (IsNumber(firstValue) && IsNumber(secondValue))
+            {
+                double result = ConvertToNumber(firstValue) - ConvertToNumber(secondValue);
+                return Ok(result.ToString());
+            }
+            return BadRequest("Request with invalid input");
         }
+
+        [HttpGet("multiplication/{firstValue}/{secondValue}")]
+        public IActionResult Multiplication(string firstValue, string secondValue)
+        {
+            if (IsNumber(firstValue) && IsNumber(secondValue))
+            {
+                double result = ConvertToNumber(firstValue) * ConvertToNumber(secondValue);
+                return Ok(result.ToString());
+            }
+            return BadRequest("Request with invalid input");
+        }
+
+        [HttpGet("division/{firstValue}/{secondValue}")]
+        public IActionResult Division(string firstValue, string secondValue)
+        {
+            if (IsNumber(firstValue) && IsNumber(secondValue))
+            {
+                double result = ConvertToNumber(firstValue) / ConvertToNumber(secondValue);
+                return Ok(result.ToString());
+            }
+            return BadRequest("Request with invalid input");
+        }                
+
+        [HttpGet("percentage/{firstValue}/{secondValue}")]
+        public IActionResult Percentage(string firstValue, string secondValue)
+        {
+            if (IsNumber(firstValue) && IsNumber(secondValue))
+            {
+                double result = ConvertToNumber(firstValue) * ConvertToNumber(secondValue) / 100;
+                return Ok(result.ToString());
+            }
+            return BadRequest("Request with invalid input");
+        }
+
+        public bool IsNumber(string value) => double.TryParse(value, NumberStyles.Any, NumberFormatInfo.InvariantInfo, out _);
+
+        public double ConvertToNumber(string value) => double.Parse(value.Replace(',', '.'), NumberFormatInfo.InvariantInfo);
+        
     }
 }
