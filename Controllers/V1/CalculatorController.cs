@@ -1,10 +1,10 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CalculatorApi.Controllers
+namespace CalculatorApi.Controllers.V1
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v1")]
     public class CalculatorController : ControllerBase
     {
         private readonly ILogger<CalculatorController> _logger;
