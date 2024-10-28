@@ -69,9 +69,9 @@ namespace CalculatorApi.Controllers.V1
             return BadRequest("Request with invalid input");
         }
 
-        public bool IsNumber(string value) => double.TryParse(value, NumberStyles.Any, NumberFormatInfo.InvariantInfo, out _);
+        private bool IsNumber(string value) => double.TryParse(value, NumberStyles.Any, NumberFormatInfo.InvariantInfo, out _);
 
-        public double ConvertToNumber(string value) => double.Parse(value.Replace(',', '.'), NumberFormatInfo.InvariantInfo);
+        private double ConvertToNumber(string value) => double.Parse(value.Replace(',', '.'), NumberFormatInfo.InvariantInfo);
         
     }
 }
